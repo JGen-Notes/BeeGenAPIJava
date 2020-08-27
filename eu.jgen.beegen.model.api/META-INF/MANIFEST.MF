@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: BeeGen Model API
+Bundle-SymbolicName: eu.jgen.beegen.model.api
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: JGen Notes
+Automatic-Module-Name: eu.jgen.beegen.model.api
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ClassPath: lib/jmmi.jar,
+ lib/sqlite-jdbc-3.32.3.2.jar,
+ .
+Require-Bundle: org.junit;bundle-version="4.13.0",
+ org.junit.jupiter.api;bundle-version="5.6.0"
