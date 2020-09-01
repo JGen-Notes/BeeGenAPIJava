@@ -37,7 +37,7 @@ public class JGenContainer  {
 	protected JGenModel genModel = null;
 	
 	/*
-	 * Connecting to the BeeGen local model.
+	 * Connecting to the Bee Gen model.
 	 */
 	public JGenModel connect(String modelPath) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
         try {
@@ -59,8 +59,8 @@ public class JGenContainer  {
 		try {
 			connection.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			logger.severe("Problems when closing connection.");
 		}
 	}
 

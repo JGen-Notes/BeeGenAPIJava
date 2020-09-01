@@ -11,10 +11,10 @@ class ObjMetaTypeTest {
 	@Test
 	void test() {
 		
-		System.out.println(ObjMetaType.ACBLKBSD.code());
+		System.out.println(ObjMetaType.ACBLKBSD.code);
 		System.out.println(ObjMetaType.ACBLKBSD);
 		
-		System.out.println(ObjMetaType.valueOf("FUNCDEF").code());
+		System.out.println(ObjMetaType.valueOf("FUNCDEF").code);
 		
 		System.out.println(ObjMetaType.ACBLKBSD.name());
 		

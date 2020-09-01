@@ -31,9 +31,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import com.ca.gen.jmmi.schema.AscTypeCode;
-import com.ca.gen.jmmi.schema.ObjTypeCode;
-import com.ca.gen.jmmi.schema.PrpTypeCode;
+import eu.jgen.beegen.model.meta.ObjMetaType;
+import eu.jgen.beegen.model.meta.PrpMetaType;
 
 public class JGenModel {
 
@@ -45,6 +44,66 @@ public class JGenModel {
 	 */
 	public JGenModel(JGenContainer genContainer) {
 		this.genContainer = genContainer;
+	}
+	
+	/*
+	 * Gets name of the model.
+	 */
+	public String getName() {
+		Statement statement;
+		try {
+			String name = null;
+			statement = genContainer.connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT value FROM GenModel WHERE key = 'name';");
+			name = rs.getString(1);
+			rs.close();
+			statement.close();
+			return name;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			logger.severe("Cannot execute query.");
+		}
+		return null;
+	}
+	
+	/*
+	 * Gets version of the utility creating Bee Gen Model.
+	 */
+	public String getVersion() {
+		Statement statement;
+		try {
+			String version = null;
+			statement = genContainer.connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT value FROM GenModel WHERE key = 'version';");
+			version = rs.getString(1);
+			rs.close();
+			statement.close();
+			return version;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			logger.severe("Cannot execute query.");
+		}
+		return null;
+	}
+	
+	/*
+	 * Gets schema level of the CA Gen Model.
+	 */
+	public String getSchema() {
+		Statement statement;
+		try {
+			String schema = null;
+			statement = genContainer.connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT value FROM GenModel WHERE key = 'schema';");
+			schema = rs.getString(1);
+			rs.close();
+			statement.close();
+			return schema;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			logger.severe("Cannot execute query.");
+		}
+		return null;
 	}
 
 	/*
@@ -71,12 +130,12 @@ public class JGenModel {
 	/*
 	 * Counts number of the objects of the specified type.
 	 */
-	public long countTypeObjects(ObjTypeCode objTypeCode) {
+	public long countTypeObjects(ObjMetaType objMetaType) {
 		PreparedStatement statement;
 		long count = 0;
 		try {
 			statement = genContainer.connection.prepareStatement("SELECT COUNT(*) FROM GenObjects WHERE objMnemonic = ?;");
-			statement.setString(1, objTypeCode.toString());
+			statement.setString(1, objMetaType.toString());
 			ResultSet rs = statement.executeQuery();
 			count = rs.getLong(1);
 			rs.close();
@@ -121,12 +180,12 @@ public class JGenModel {
 	/*
 	 * Finds all objects with the matching object type code.
 	 */
-	public List<JGenObject> findTypeObjects(ObjTypeCode objTypeCode) {
+	public List<JGenObject> findTypeObjects(ObjMetaType objMetaType) {
 		List<JGenObject> list = new ArrayList<>();
 		PreparedStatement statement;
 		try {
 			statement = genContainer.connection.prepareStatement("SELECT * FROM GenObjects WHERE objMnemonic = ?;");
-			statement.setString(1, objTypeCode.toString());
+			statement.setString(1, objMetaType.toString());
 			ResultSet rs = statement.executeQuery();
 			while (rs.next()) {
 				list.add(new JGenObject(this, rs.getLong("id"), rs.getShort("objType"), rs.getString("objMnemonic"),
@@ -142,14 +201,14 @@ public class JGenModel {
 		return list;
 	}
 
-	public JGenObject findNamedObject(ObjTypeCode objTypeCode, PrpTypeCode prpTypeCode, String name) {
+	public JGenObject findNamedObject(ObjMetaType objMetaType, PrpMetaType prpMetaType, String name) {
 		return null;
 	}
 
 	/*
-	 * Gets encyclopedia owning this model.
+	 * Gets container owning this model.
 	 */
-	public JGenContainer getEncy() {
+	public JGenContainer getContainer() {
 		return genContainer;
 	}
 

@@ -1,8 +1,6 @@
 package eu.jgen.beegen.model.api.test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
@@ -10,11 +8,11 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.ca.gen.jmmi.schema.ObjTypeCode;
-
 import eu.jgen.beegen.model.api.JGenContainer;
 import eu.jgen.beegen.model.api.JGenModel;
 import eu.jgen.beegen.model.api.JGenObject;
+
+import eu.jgen.beegen.model.meta.ObjMetaType;
 
 class JGenModelTest {
 	
@@ -45,12 +43,12 @@ class JGenModelTest {
 	@Test
 	void testCountTypeObjects() {
 		//System.out.println(genModel.countTypeObjects(ObjTypeCode.FUNCDEF));
-		assertEquals(51, genModel.countTypeObjects(ObjTypeCode.FUNCDEF));
+		assertEquals(51, genModel.countTypeObjects(ObjMetaType.FUNCDEF));
 	}
 	
 	@Test
 	void testFindTypeObjects() {
-		List<JGenObject> list = genModel.findTypeObjects(ObjTypeCode.FUNCDEF);
+		List<JGenObject> list = genModel.findTypeObjects(ObjMetaType.FUNCDEF);
 		assertEquals(51, list.size());
 		for (JGenObject genObject : list) {
 		//	System.out.println(genObject.getId() + "," + genObject.objType + "," + genObject.objMnemonic);

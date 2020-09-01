@@ -26,9 +26,9 @@ package eu.jgen.beegen.model.api;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ca.gen.jmmi.schema.AscTypeCode;
-import com.ca.gen.jmmi.schema.ObjTypeCode;
-import com.ca.gen.jmmi.schema.PrpTypeCode;
+import eu.jgen.beegen.model.meta.AscMetaType;
+import eu.jgen.beegen.model.meta.ObjMetaType;
+import eu.jgen.beegen.model.meta.PrpMetaType;
 
 public class JGenObject {
 
@@ -54,29 +54,29 @@ public class JGenObject {
 		this.objMnemonic = objMnemonic;
 	}
 
-	public char findCharacterProperty(PrpTypeCode prpTypeCode) {
+	public char findCharacterProperty(PrpMetaType prpMetaType) {
 		
 		return ' ';
 	}
 
-	public int findNumericProperty(PrpTypeCode prpTypeCode) {
+	public int findNumericProperty(PrpMetaType prpMetaType) {
 
 		return -1;
 	}
 
-	public String findTextProperty(PrpTypeCode prpTypeCode) {
+	public String findTextProperty(PrpMetaType prpMetaType) {
 		
 		return null;
 	}
 
-	public List<JGenObject> findAssociationMany(AscTypeCode ascTypeCode) {
+	public List<JGenObject> findAssociationMany(AscMetaType ascMetaType) {
 		List<JGenObject> list = new ArrayList<JGenObject>();
 
 
 		return list;
 	}
 
-	public JGenObject findAssociationOne(AscTypeCode ascTypeCode) {
+	public JGenObject findAssociationOne(AscMetaType ascMetaType) {
 	
 		
 		return null;
@@ -86,8 +86,8 @@ public class JGenObject {
 		return objId;
 	}
 
-	public ObjTypeCode getObjTypeCode() {
-		return ObjTypeCode.valueOf(objMnemonic);
+	public ObjMetaType getObjMetaType() {
+		return ObjMetaType.valueOf(objMnemonic);
 	}
 
 }
