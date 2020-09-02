@@ -23,6 +23,7 @@
  */
 package eu.jgen.beegen.model.api;
 
+import java.lang.reflect.Array;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -44,6 +45,7 @@ public class JGenModel {
 	 */
 	public JGenModel(JGenContainer genContainer) {
 		this.genContainer = genContainer;
+		logger.setLevel(this.genContainer.getLogger().getLevel());
 	}
 	
 	/*
@@ -109,13 +111,13 @@ public class JGenModel {
 	/*
 	 * Finds number objects in the model.
 	 */
-	public long countObjects() {
+	public int countObjects() {
 		Statement statement;
 		try {
-			long count = 0;
+			int count = 0;
 			statement = genContainer.connection.createStatement();
 			ResultSet rs = statement.executeQuery("SELECT COUNT(*) FROM GenObjects;");
-			count = rs.getLong(1);
+			count = rs.getInt(1);
 			rs.close();
 			statement.close();
 			return count;
@@ -157,10 +159,9 @@ public class JGenModel {
 			statement = genContainer.connection.prepareStatement("SELECT * FROM GenObjects WHERE id = ?;");
 			statement.setInt(1, id);
 			ResultSet rs = statement.executeQuery();
-	//		rs.close();
-	//		statement.close();
-			return new JGenObject(this, rs.getInt("id"), rs.getShort("objType"), rs.getString("objMnemonic"),
+			JGenObject genObject = new JGenObject(this, rs.getInt("id"), rs.getShort("objType"), rs.getString("objMnemonic"),
 					rs.getString("name"));
+			return genObject;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			logger.severe("Cannot execute query.");
@@ -173,7 +174,21 @@ public class JGenModel {
 	 */
 	public List<JGenObject> findAllObjects() {
 		List<JGenObject> list = new ArrayList<>();
-
+		PreparedStatement statement;
+		try {
+			statement = genContainer.connection.prepareStatement("SELECT * FROM GenObjects;");
+			ResultSet rs = statement.executeQuery();
+			while (rs.next()) {
+				list.add(new JGenObject(this, rs.getLong("id"), rs.getShort("objType"), rs.getString("objMnemonic"),
+						rs.getString("name")));
+			}
+			rs.close();
+			statement.close();
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			logger.severe("Cannot execute query.");
+		}
 		return list;
 	}
 

@@ -23,14 +23,22 @@
  */
 package eu.jgen.beegen.model.api;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import eu.jgen.beegen.model.meta.AscMetaType;
 import eu.jgen.beegen.model.meta.ObjMetaType;
 import eu.jgen.beegen.model.meta.PrpMetaType;
 
 public class JGenObject {
+	
+	private Logger logger = Logger.getLogger(this.getClass().getName());
+	
+	protected JGenContainer genContainer;
 
 	protected JGenModel genModel;
 	public long objId = -1;
@@ -41,45 +49,152 @@ public class JGenObject {
 
 	public JGenObject(JGenModel genModel, long objId, short objType, String objMnemonic, String name) {
 		this.genModel = genModel;
+		this.genContainer = genModel.genContainer;
 		this.objId = objId;
 		this.objType = objType;
 		this.objMnemonic = objMnemonic;
 		this.name = name;
+		logger.setLevel(this.genModel.genContainer.getLogger().getLevel());
 	}
 	
 	public JGenObject(JGenModel genModel, long objId, short objType, String objMnemonic) {
 		this.genModel = genModel;
+		this.genContainer = genModel.genContainer;
 		this.objId = objId;
 		this.objType = objType;
 		this.objMnemonic = objMnemonic;
+		logger.setLevel(this.genModel.genContainer.getLogger().getLevel());
 	}
 
+	/*
+	 * Find character property of the spcified type for this object.
+	 */
 	public char findCharacterProperty(PrpMetaType prpMetaType) {
-		
-		return ' ';
+		PreparedStatement statement;
+		char character = ' ';
+		try {
+			statement = genContainer.connection.prepareStatement("SELECT * FROM GenProperties WHERE objid=? AND mnemonic=?;");
+			statement.setLong(1, objId);
+			statement.setString(2, prpMetaType.name());
+			ResultSet rs = statement.executeQuery();
+			if (rs.next()) {
+				String text = rs.getString(5);
+				if (text.length() >= 1) {
+					character = text.charAt(0);
+				} 							
+			} else {
+				character = genContainer.meta.getDefaultCharProperty(ObjMetaType.valueOf(this.objMnemonic), prpMetaType);
+			}
+			rs.close();
+			statement.close();
+			return character;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			logger.severe("Cannot execute query.");
+		}
+		return character;
 	}
 
-	public int findNumericProperty(PrpMetaType prpMetaType) {
-
-		return -1;
+	/*
+	 * Find number property of the spcified type for this object.
+	 */
+	public int findNumberProperty(PrpMetaType prpMetaType) {
+		PreparedStatement statement;
+		int number = 0;
+		try {
+			statement = genContainer.connection.prepareStatement("SELECT * FROM GenProperties WHERE objid=? AND mnemonic=?;");
+			statement.setLong(1, objId);
+			statement.setString(2, prpMetaType.name());
+			ResultSet rs = statement.executeQuery();
+			if (rs.next()) {
+				number = Integer.parseInt(rs.getString(5)); 							
+			} else {
+				number = genContainer.meta.getDefaultNumberProperty(ObjMetaType.valueOf(this.objMnemonic), prpMetaType);
+			}
+			rs.close();
+			statement.close();
+			return number;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			logger.severe("Cannot execute query.");
+		}
+		return number;
 	}
 
+	/*
+	 * Find text property of the spcified type for this object.
+	 */
 	public String findTextProperty(PrpMetaType prpMetaType) {
-		
-		return null;
+		PreparedStatement statement;
+		String text = "";
+		try {
+			statement = genContainer.connection.prepareStatement("SELECT * FROM GenProperties WHERE objid=? AND mnemonic=?;");
+			statement.setLong(1, objId);
+			statement.setString(2, prpMetaType.name());
+			ResultSet rs = statement.executeQuery();
+			if (rs.next()) {
+				text = rs.getString(5); 							
+			} else {
+				text = genContainer.meta.getDefaultTextProperty(ObjMetaType.valueOf(this.objMnemonic), prpMetaType);
+			}
+			rs.close();
+			statement.close();
+			return text;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			logger.severe("Cannot execute query.");
+		}
+		return text;
 	}
 
+	/*
+	 * Find assoctaions of the spcified type from this object.
+	 */
 	public List<JGenObject> findAssociationMany(AscMetaType ascMetaType) {
 		List<JGenObject> list = new ArrayList<JGenObject>();
-
-
+		PreparedStatement statement;
+		try {
+			statement = genContainer.connection.prepareStatement("SELECT * FROM GenAssociations WHERE fromObjid=? AND ascMnemonic=?;");
+			statement.setLong(1, objId);
+			statement.setString(2, ascMetaType.name());
+			ResultSet rs = statement.executeQuery();
+			while (rs.next()) {
+				JGenObject genObject = genModel.findObjectById(rs.getInt("toObjid"));				
+				list.add(genObject);				
+			}
+			rs.close();
+			statement.close();
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			logger.severe("Cannot execute query.");
+		}
 		return list;
 	}
 
+	/*
+	 * Find association of the specied type associated with this object.
+	 */
 	public JGenObject findAssociationOne(AscMetaType ascMetaType) {
-	
-		
-		return null;
+		JGenObject genObject = null;
+		PreparedStatement statement;
+		try {
+			statement = genContainer.connection.prepareStatement("SELECT * FROM GenAssociations WHERE fromObjid=? AND ascMnemonic=?;");
+			statement.setLong(1, objId);
+			statement.setString(2, ascMetaType.name());
+			ResultSet rs = statement.executeQuery();
+			while (rs.next()) {
+				genObject = genModel.findObjectById(rs.getInt("toObjid"));
+				break;
+			}
+			rs.close();
+			statement.close();
+			return genObject;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			logger.severe("Cannot execute query.");
+		}
+		return genObject;
 	}
 
 	public long getId() {		

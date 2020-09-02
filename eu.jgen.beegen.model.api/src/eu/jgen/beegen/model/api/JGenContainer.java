@@ -26,26 +26,43 @@ package eu.jgen.beegen.model.api;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import eu.jgen.beegen.model.meta.Meta;
 
 public class JGenContainer  {
 	
 	private Logger logger =  Logger.getLogger(this.getClass().getName());
 	
-	protected Connection connection = null;
+	public Connection connection = null;
+	
+	public Meta meta = null;
 	
 	protected JGenModel genModel = null;
+	
+	protected String modelPath = null;
+	
+	/*
+	 * Get logger used by the container.
+	 */
+	public Logger getLogger() {
+		return this.logger;
+	}
 	
 	/*
 	 * Connecting to the Bee Gen model.
 	 */
 	public JGenModel connect(String modelPath) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
-        try {
+        logger.setLevel(Level.SEVERE);
+		this.modelPath = modelPath;
+		try {
         	Class.forName("org.sqlite.JDBC").newInstance();
         	String url = "jdbc:sqlite:" + modelPath;
-			connection = DriverManager.getConnection(url);
-	        logger.info("Connecting to the  model: " + modelPath);
-	        genModel = new JGenModel(this);
+			this.connection = DriverManager.getConnection(url);
+	        this.logger.info("Connecting to the  model: " + modelPath);
+	        this.genModel = new JGenModel(this);
+	        this.meta = new Meta(this);
 			return genModel;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -53,6 +70,10 @@ public class JGenContainer  {
 		}
  		return null;		
 	}
+	
+	/*
+	 * Disconnect from the Bee Gen Model.
+	 */
 
 	public void disconnect() {
 		logger.info("Disconnecting from the model.");
@@ -62,6 +83,13 @@ public class JGenContainer  {
 			e.printStackTrace();
 			logger.severe("Problems when closing connection.");
 		}
+	}
+	
+	/*
+	 * Get path to location of the Bee Gen Model.
+	 */
+	public String getModelLocation() {
+		return this.modelPath;
 	}
 
 }

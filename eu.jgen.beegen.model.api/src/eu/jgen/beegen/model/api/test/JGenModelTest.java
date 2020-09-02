@@ -16,7 +16,7 @@ import eu.jgen.beegen.model.meta.ObjMetaType;
 
 class JGenModelTest {
 	
-	private static final String MODEL_PATH = "//Users/marek/Gen/Models/model01.ief/bee/MODEL01.db";
+	private static final String MODEL_PATH = JGenContainerTest.MODEL_PATH;
 	
 	JGenContainer genContainer;
 	JGenModel genModel;
@@ -37,12 +37,12 @@ class JGenModelTest {
 	@Test
 	void testCountObjects() {
 		//System.out.println(genModel.countObjects());
-		assertEquals(1349, genModel.countObjects());
+		assertEquals(1228, genModel.countObjects());
 	}
 	
 	@Test
 	void testCountTypeObjects() {
-		//System.out.println(genModel.countTypeObjects(ObjTypeCode.FUNCDEF));
+		//System.out.println(genModel.countTypeObjects(ObjMetaType.FUNCDEF));
 		assertEquals(51, genModel.countTypeObjects(ObjMetaType.FUNCDEF));
 	}
 	
@@ -50,17 +50,17 @@ class JGenModelTest {
 	void testFindTypeObjects() {
 		List<JGenObject> list = genModel.findTypeObjects(ObjMetaType.FUNCDEF);
 		assertEquals(51, list.size());
-		for (JGenObject genObject : list) {
-		//	System.out.println(genObject.getId() + "," + genObject.objType + "," + genObject.objMnemonic);
-		}
-		
-		
-		//assertEquals(51, genModel.countTypeObjects(ObjTypeCode.FUNCDEF));
 	}
 	
 	@Test
 	void testFindObjectById() {
 		assertEquals(25165874, genModel.findObjectById(25165874).objId);
+	}
+	
+	@Test
+	void testFindAllObjects() {
+		List<JGenObject> list = genModel.findAllObjects();
+		assertEquals(1228, list.size());
 	}
 	
 	
