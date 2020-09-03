@@ -216,8 +216,27 @@ public class JGenModel {
 		return list;
 	}
 
-	public JGenObject findNamedObject(ObjMetaType objMetaType, PrpMetaType prpMetaType, String name) {
-		return null;
+	public List<JGenObject> findNamedObjects(ObjMetaType objMetaType, PrpMetaType prpMetaType, String name) {
+		List<JGenObject> list = new ArrayList<>();
+		PreparedStatement statement;
+		try {
+			statement = genContainer.connection.prepareStatement("SELECT * FROM GenObjects, GenProperties WHERE objType = ? AND id = objid AND prpType = ? AND value = ?;");
+			statement.setShort(1, objMetaType.code);
+			statement.setShort(2, prpMetaType.code);
+			statement.setString(3, name);			
+			ResultSet rs = statement.executeQuery();
+			while (rs.next()) {
+				list.add(new JGenObject(this, rs.getLong("id"), rs.getShort("objType"), rs.getString("objMnemonic"),
+						rs.getString("name")));
+			}
+			rs.close();
+			statement.close();
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			logger.severe("Cannot execute query.");
+		}
+		return list;
 	}
 
 	/*

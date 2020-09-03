@@ -75,5 +75,23 @@ private static final String MODEL_PATH = JGenContainerTest.MODEL_PATH;
 		assertEquals(79691776,toGenObject.objId);
 	}
 	
+	@Test
+	void testGetObjMetaType() {
+		JGenObject genObject = genModel.findObjectById(118489142);	
+		assertEquals(genObject.objType, genObject.getObjMetaType().code);
+	}
+	
+	@Test
+	void testFindNamedObject() {
+		List<JGenObject> list = genModel.findNamedObjects(ObjMetaType.FUNCDEF, PrpMetaType.NAME, "CONCAT");	
+		for (JGenObject genObject : list) {
+			//System.out.println(genObjectt.name);
+			assertEquals("CONCAT", genObject.name);
+			break;
+		}
+		
+		//assertEquals(genObject.objType, genObject.getObjMetaType().code);
+	}
+	
 
 }

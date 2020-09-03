@@ -51,9 +51,16 @@ public class JGenContainer  {
 	}
 	
 	/*
+	 * Get model.
+	 */	
+	public JGenModel getModel() {
+		return genModel;
+	}
+	
+	/*
 	 * Connecting to the Bee Gen model.
 	 */
-	public JGenModel connect(String modelPath) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+	public JGenModel connect(String modelPath) {
         logger.setLevel(Level.SEVERE);
 		this.modelPath = modelPath;
 		try {
@@ -64,9 +71,18 @@ public class JGenContainer  {
 	        this.genModel = new JGenModel(this);
 	        this.meta = new Meta(this);
 			return genModel;
-		} catch (SQLException e) {
+		} catch (SQLException e) {			
+			logger.severe("ERROR: Cannot connect to the model due to SQLite error.");
 			e.printStackTrace();
-			logger.severe("Cannot connect to the model.");
+		} catch (InstantiationException e) {			
+			logger.severe("ERROR: Cannot instanciate SQLite driver correctly.");
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {			
+			logger.severe("ERROR: Cannot instanciate SQLite driver classdue to illegal access attempt.");
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {			
+			logger.severe("ERROR: Cannot find SQLite driver class.");
+			e.printStackTrace();
 		}
  		return null;		
 	}

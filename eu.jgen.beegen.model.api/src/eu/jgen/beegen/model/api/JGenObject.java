@@ -38,13 +38,14 @@ public class JGenObject {
 	
 	private Logger logger = Logger.getLogger(this.getClass().getName());
 	
-	protected JGenContainer genContainer;
+	public JGenContainer genContainer;
 
-	protected JGenModel genModel;
+	public JGenModel genModel;
 	public long objId = -1;
 	public short objType = -1;
 	public String objMnemonic = "UNKNOWN";
 	public String name = "";
+	private ObjMetaType objMetaType;
 
 
 	public JGenObject(JGenModel genModel, long objId, short objType, String objMnemonic, String name) {
@@ -54,6 +55,7 @@ public class JGenObject {
 		this.objType = objType;
 		this.objMnemonic = objMnemonic;
 		this.name = name;
+		this.objMetaType = ObjMetaType.valueOf(objMnemonic);
 		logger.setLevel(this.genModel.genContainer.getLogger().getLevel());
 	}
 	
@@ -63,9 +65,10 @@ public class JGenObject {
 		this.objId = objId;
 		this.objType = objType;
 		this.objMnemonic = objMnemonic;
+		this.objMetaType = ObjMetaType.valueOf(objMnemonic);
 		logger.setLevel(this.genModel.genContainer.getLogger().getLevel());
 	}
-
+	
 	/*
 	 * Find character property of the spcified type for this object.
 	 */
@@ -202,7 +205,7 @@ public class JGenObject {
 	}
 
 	public ObjMetaType getObjMetaType() {
-		return ObjMetaType.valueOf(objMnemonic);
+		return objMetaType;
 	}
 
 }
