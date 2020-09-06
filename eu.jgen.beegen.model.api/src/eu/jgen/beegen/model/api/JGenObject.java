@@ -176,7 +176,7 @@ public class JGenObject {
 	}
 
 	/*
-	 * Find association of the specied type associated with this object.
+	 * Find association of the specified type associated with this object.
 	 */
 	public JGenObject findAssociationOne(AscMetaType ascMetaType) {
 		JGenObject genObject = null;
@@ -206,6 +206,14 @@ public class JGenObject {
 
 	public ObjMetaType getObjMetaType() {
 		return objMetaType;
+	}
+ 
+	public String toString() {		
+		String name = "";
+		if (this.name.length() > 0) {
+			name = ", name=" + this.name;
+		}
+		return "[" + this.objId + ", objType=" + this.objType + ", mnemonic=" + this.objMnemonic + name + "]" ;
 	}
 
 }

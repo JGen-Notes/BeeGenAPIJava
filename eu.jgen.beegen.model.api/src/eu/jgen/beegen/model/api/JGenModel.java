@@ -245,5 +245,9 @@ public class JGenModel {
 	public JGenContainer getContainer() {
 		return genContainer;
 	}
+	
+	public String toString() {		
+		return "[" + ", name=" + this.getName() + "]" ;
+	}
 
 }

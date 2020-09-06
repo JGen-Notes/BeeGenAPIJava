@@ -107,5 +107,10 @@ public class JGenContainer  {
 	public String getModelLocation() {
 		return this.modelPath;
 	}
+	
+
+	public String toString() {		
+		return "[" + ", modelPath=" + this.modelPath + "]" ;
+	}
 
 }
