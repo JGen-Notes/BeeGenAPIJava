@@ -37,7 +37,7 @@ class JGenContainerTest {
 	@Test
 	void testGetModelLocation() {
 		assertTrue(genContainer.connect(MODEL_PATH) != null);
-		assertEquals(genContainer.getModelLocation(), MODEL_PATH);		
+		assertEquals(genContainer.getContainerLocation(), MODEL_PATH);		
 	}
 	
 	@Test

@@ -31,6 +31,19 @@ import java.util.logging.Logger;
 
 import eu.jgen.beegen.model.meta.Meta;
 
+/**
+ * 
+ * This object represents a container.
+ * 
+ * Bee Gen Model Framework uses the SQLite database to store metadata representing 
+ * your application design as imported from the CA Gen Local Model. The container 
+ * connects to the specific location of the SQLite database and provides access 
+ * to the model. Therefore container represents the SQLite database as its specific physical implementation.
+ * 
+ * @author Marek Stankiewicz
+ *
+ *	@since 1.0.0
+ */
 public class JGenContainer  {
 	
 	private Logger logger =  Logger.getLogger(this.getClass().getName());
@@ -41,7 +54,7 @@ public class JGenContainer  {
 	
 	protected JGenModel genModel = null;
 	
-	protected String modelPath = null;
+	protected String containerPath = null;
 	
 	/*
 	 * Get logger used by the container.
@@ -50,24 +63,31 @@ public class JGenContainer  {
 		return this.logger;
 	}
 	
-	/*
-	 * Get model.
-	 */	
+	/**
+	 * Returns object representing the model stored in the container 
+	 * if the container is connected to the SQLite database 
+	 * and contains a valid model.
+	 * 
+	 * @return   object representing model or <code>null</code> if valid model does not exist.
+	 */
 	public JGenModel getModel() {
 		return genModel;
 	}
 	
-	/*
-	 * Connecting to the Bee Gen model.
+	/**
+	 * Connects to the SQLite database storing metadata with the application design. 
+	 * 
+	 * @param containerPath  
+	 * @return object representing model or <code>null</code> if connection was unsuccessful.
 	 */
-	public JGenModel connect(String modelPath) {
+	public JGenModel connect(String containerPath) {
         logger.setLevel(Level.SEVERE);
-		this.modelPath = modelPath;
+		this.containerPath = containerPath;
 		try {
         	Class.forName("org.sqlite.JDBC").newInstance();
-        	String url = "jdbc:sqlite:" + modelPath;
+        	String url = "jdbc:sqlite:" + containerPath;
 			this.connection = DriverManager.getConnection(url);
-	        this.logger.info("Connecting to the  model: " + modelPath);
+	        this.logger.info("Connecting to the  model: " + containerPath);
 	        this.genModel = new JGenModel(this);
 	        this.meta = new Meta(this);
 			return genModel;
@@ -86,11 +106,12 @@ public class JGenContainer  {
 		}
  		return null;		
 	}
-	
-	/*
-	 * Disconnect from the Bee Gen Model.
-	 */
 
+	/**
+	 * Disconnects from the SQLite database. All actions on the model or 
+	 * any part of the model will reject any attempt to use 
+	 * any functionality of the API.
+	 */
 	public void disconnect() {
 		logger.info("Disconnecting from the model.");
 		try {
@@ -101,16 +122,18 @@ public class JGenContainer  {
 		}
 	}
 	
-	/*
-	 * Get path to location of the Bee Gen Model.
+	/**
+	 * Returns path to the location of the SQLite database as used during connect operation.
+	 * 
+	 * @return path to the SQLite database location 
 	 */
-	public String getModelLocation() {
-		return this.modelPath;
+	public String getContainerLocation() { 
+		return this.containerPath;
 	}
 	
 
 	public String toString() {		
-		return "[" + ", modelPath=" + this.modelPath + "]" ;
+		return "[" + ", modelPath=" + this.containerPath + "]" ;
 	}
 
 }

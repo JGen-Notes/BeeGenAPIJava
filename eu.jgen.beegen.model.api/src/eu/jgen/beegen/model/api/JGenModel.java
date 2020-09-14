@@ -23,7 +23,6 @@
  */
 package eu.jgen.beegen.model.api;
 
-import java.lang.reflect.Array;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -35,21 +34,36 @@ import java.util.logging.Logger;
 import eu.jgen.beegen.model.meta.ObjMetaType;
 import eu.jgen.beegen.model.meta.PrpMetaType;
 
+/**
+ * This object represents a model stored in the container. A container connects
+ * to the SQLite database for accessing model data.
+ * 
+ * @author Marek Stankiewicz
+ *
+ * @since 1.0.0
+ */
 public class JGenModel {
 
 	private Logger logger = Logger.getLogger(this.getClass().getName());
 	protected JGenContainer genContainer;
 
-	/*
-	 * Creates instance of the model.
+	/**
+	 * The class contractor creates an instance of the model object and associates
+	 * the model object with the container. Container knows how to access the SQLite
+	 * database to retrieve information about objects and their associations and
+	 * properties.
+	 * 
+	 * @param genContainer
 	 */
 	public JGenModel(JGenContainer genContainer) {
 		this.genContainer = genContainer;
 		logger.setLevel(this.genContainer.getLogger().getLevel());
 	}
-	
-	/*
-	 * Gets name of the model.
+
+	/**
+	 * Returns name of the model as given during model creation of the model in the CA Gen.
+	 * 
+	 * @return Name of the model.
 	 */
 	public String getName() {
 		Statement statement;
@@ -67,9 +81,11 @@ public class JGenModel {
 		}
 		return null;
 	}
-	
-	/*
-	 * Gets version of the utility creating Bee Gen Model.
+
+	/**
+	 *  Gets the version of the utility creating the Bee Gen Model.
+	 *  
+	 * @return Version level.
 	 */
 	public String getVersion() {
 		Statement statement;
@@ -87,9 +103,11 @@ public class JGenModel {
 		}
 		return null;
 	}
-	
-	/*
-	 * Gets schema level of the CA Gen Model.
+
+	/**
+	 * Gets the schema level of the CA Gen Model used as a source of metadata.
+	 * 
+	 * @return Schema level.
 	 */
 	public String getSchema() {
 		Statement statement;
@@ -108,8 +126,10 @@ public class JGenModel {
 		return null;
 	}
 
-	/*
-	 * Finds number objects in the model.
+	/**
+	 * Counts number of objects in the model.
+	 * 
+	 * @return number of objects in the model
 	 */
 	public int countObjects() {
 		Statement statement;
@@ -129,14 +149,18 @@ public class JGenModel {
 
 	}
 
-	/*
-	 * Counts number of the objects of the specified type.
+	/**
+	 * Counts a number of objects of the specified type in the model.
+	 * 
+	 * @param objMetaType object meta type
+	 * @return number of objects of the specified type in the model.
 	 */
 	public long countTypeObjects(ObjMetaType objMetaType) {
 		PreparedStatement statement;
 		long count = 0;
 		try {
-			statement = genContainer.connection.prepareStatement("SELECT COUNT(*) FROM GenObjects WHERE objMnemonic = ?;");
+			statement = genContainer.connection
+					.prepareStatement("SELECT COUNT(*) FROM GenObjects WHERE objMnemonic = ?;");
 			statement.setString(1, objMetaType.toString());
 			ResultSet rs = statement.executeQuery();
 			count = rs.getLong(1);
@@ -150,8 +174,11 @@ public class JGenModel {
 		return count;
 	}
 
-	/*
-	 * Finds object in the model using object id.
+	/**
+	 * Finds the object in the model having a specified object id.
+	 * 
+	 * @param id unique identifier of the object
+	 * @return object having specified identifier or <code>null</code> if not found
 	 */
 	public JGenObject findObjectById(int id) {
 		PreparedStatement statement;
@@ -159,8 +186,8 @@ public class JGenModel {
 			statement = genContainer.connection.prepareStatement("SELECT * FROM GenObjects WHERE id = ?;");
 			statement.setInt(1, id);
 			ResultSet rs = statement.executeQuery();
-			JGenObject genObject = new JGenObject(this, rs.getInt("id"), rs.getShort("objType"), rs.getString("objMnemonic"),
-					rs.getString("name"));
+			JGenObject genObject = new JGenObject(this, rs.getInt("id"), rs.getShort("objType"),
+					rs.getString("objMnemonic"), rs.getString("name"));
 			return genObject;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -169,8 +196,10 @@ public class JGenModel {
 		return null;
 	}
 
-	/*
-	 * Returns list of all objects in the model.
+	/**
+	 *  Finds and returns a list of all objects in the model.
+	 *  
+	 * @return list of objects
 	 */
 	public List<JGenObject> findAllObjects() {
 		List<JGenObject> list = new ArrayList<>();
@@ -195,6 +224,10 @@ public class JGenModel {
 	/*
 	 * Finds all objects with the matching object type code.
 	 */
+	/**
+	 * @param objMetaType
+	 * @return
+	 */
 	public List<JGenObject> findTypeObjects(ObjMetaType objMetaType) {
 		List<JGenObject> list = new ArrayList<>();
 		PreparedStatement statement;
@@ -216,14 +249,24 @@ public class JGenModel {
 		return list;
 	}
 
+	
+	/**
+	 * Finds and returns a list of objects having the specified  object type, property type and name.
+	 * 
+	 * @param objMetaType Type of object
+	 * @param prpMetaType Type of property.
+	 * @param name Name given to the object.
+	 * @return List of objects
+	 */
 	public List<JGenObject> findNamedObjects(ObjMetaType objMetaType, PrpMetaType prpMetaType, String name) {
 		List<JGenObject> list = new ArrayList<>();
 		PreparedStatement statement;
 		try {
-			statement = genContainer.connection.prepareStatement("SELECT * FROM GenObjects, GenProperties WHERE objType = ? AND id = objid AND prpType = ? AND value = ?;");
+			statement = genContainer.connection.prepareStatement(
+					"SELECT * FROM GenObjects, GenProperties WHERE objType = ? AND id = objid AND prpType = ? AND value = ?;");
 			statement.setShort(1, objMetaType.code);
 			statement.setShort(2, prpMetaType.code);
-			statement.setString(3, name);			
+			statement.setString(3, name);
 			ResultSet rs = statement.executeQuery();
 			while (rs.next()) {
 				list.add(new JGenObject(this, rs.getLong("id"), rs.getShort("objType"), rs.getString("objMnemonic"),
@@ -240,14 +283,17 @@ public class JGenModel {
 	}
 
 	/*
-	 * Gets container owning this model.
+	 * 
+	 */
+	/**
+	 * @return
 	 */
 	public JGenContainer getContainer() {
 		return genContainer;
 	}
-	
-	public String toString() {		
-		return "[" + ", name=" + this.getName() + "]" ;
+
+	public String toString() {
+		return "[" + ", name=" + this.getName() + "]";
 	}
 
 }
