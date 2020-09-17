@@ -34,6 +34,21 @@ import eu.jgen.beegen.model.meta.AscMetaType;
 import eu.jgen.beegen.model.meta.ObjMetaType;
 import eu.jgen.beegen.model.meta.PrpMetaType;
 
+
+
+/**
+ * This model object represents a single element of the model. Model 
+ * can own any number of objects of many different types. Each object 
+ * may have number of its properties and associations with other 
+ * objects. You can follow associations discovering many other objects. 
+ * The model functionality allows you to select a number of objects 
+ * of your interest and they can be a starting point to the navigation 
+ * thru the model.
+ * 
+ * @author Marek Stankiewicz
+ *
+ * @since 1.0.0
+ */
 public class JGenObject {
 	
 	private Logger logger = Logger.getLogger(this.getClass().getName());
