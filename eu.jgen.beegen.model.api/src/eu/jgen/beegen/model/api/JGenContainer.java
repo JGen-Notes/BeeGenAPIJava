@@ -29,7 +29,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import eu.jgen.beegen.model.meta.Meta;
+import eu.jgen.beegen.model.meta.MetaHelper;
 
 /**
  * 
@@ -50,7 +50,7 @@ public class JGenContainer  {
 	
 	public Connection connection = null;
 	
-	public Meta meta = null;
+	public MetaHelper meta = null;
 	
 	protected JGenModel genModel = null;
 	
@@ -89,7 +89,7 @@ public class JGenContainer  {
 			this.connection = DriverManager.getConnection(url);
 	        this.logger.info("Connecting to the  model: " + containerPath);
 	        this.genModel = new JGenModel(this);
-	        this.meta = new Meta(this);
+	        this.meta = new MetaHelper(this);
 			return genModel;
 		} catch (SQLException e) {			
 			logger.severe("ERROR: Cannot connect to the model due to SQLite error.");
