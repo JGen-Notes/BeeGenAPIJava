@@ -10,13 +10,13 @@ import java.util.logging.Logger;
 import eu.jgen.beegen.model.api.JGenContainer;
 import eu.jgen.beegen.model.api.JGenObject;
 
-public class Meta {
+public class MetaHelper {
 	
 	private Logger logger = Logger.getLogger(this.getClass().getName());
 	
 	protected JGenContainer genContainer;
 	
-	public Meta(JGenContainer genContainer) {
+	public MetaHelper(JGenContainer genContainer) {
 		this.genContainer = genContainer;
 		logger.setLevel(this.genContainer.getLogger().getLevel());
 	}
