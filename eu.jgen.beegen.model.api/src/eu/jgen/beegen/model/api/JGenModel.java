@@ -48,7 +48,7 @@ public class JGenModel {
 	protected JGenContainer genContainer;
 
 	/**
-	 * The class contractor creates an instance of the model object and associates
+	 * The class constractor creates an instance of the model object and associates
 	 * the model object with the container. Container knows how to access the SQLite
 	 * database to retrieve information about objects and their associations and
 	 * properties.
