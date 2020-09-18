@@ -53,7 +53,7 @@ public class JGenModel {
 	 * database to retrieve information about objects and their associations and
 	 * properties.
 	 * 
-	 * @param genContainer
+	 * @param genContainer reference to the container object
 	 */
 	public JGenModel(JGenContainer genContainer) {
 		this.genContainer = genContainer;
@@ -225,8 +225,8 @@ public class JGenModel {
 	 * Finds all objects with the matching object type code.
 	 */
 	/**
-	 * @param objMetaType
-	 * @return
+	 * @param objMetaType code of the object type
+	 * @return list of objects of the specified type
 	 */
 	public List<JGenObject> findTypeObjects(ObjMetaType objMetaType) {
 		List<JGenObject> list = new ArrayList<>();
@@ -282,11 +282,8 @@ public class JGenModel {
 		return list;
 	}
 
-	/*
-	 * 
-	 */
 	/**
-	 * @return
+	 * @return reference to the container object
 	 */
 	public JGenContainer getContainer() {
 		return genContainer;

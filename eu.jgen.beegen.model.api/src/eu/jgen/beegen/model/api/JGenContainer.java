@@ -77,7 +77,7 @@ public class JGenContainer  {
 	/**
 	 * Connects to the SQLite database storing metadata with the application design. 
 	 * 
-	 * @param containerPath  
+	 * @param containerPath  path to the location of the SQLite database
 	 * @return object representing model or <code>null</code> if connection was unsuccessful.
 	 */
 	public JGenModel connect(String containerPath) {
