@@ -1,4 +1,4 @@
-![alt text](img/1.png "image title")
+![alt text](bee.png "image title")
 # BeeGenAPIJava
 Overview
 ========
