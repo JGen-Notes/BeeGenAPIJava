@@ -1,0 +1,3 @@
+# BeeGenAPIJava
+The Bee Gen Model API is very simple and straightforward. It has very few classes to access and examine the contents of the model. You will notice that the API does not include any methods allowing change imported model. You still need to download and use a free copy of the CA Gen software to create and develop your application. Such a model can then be extracted from the CA Gen Local Model and imported to the Bee Gen Model Framework using the dedicated utilities. You can learn more about an entire process here.
+ Here is a brief summary of the API. You can download the API documentation from here.
