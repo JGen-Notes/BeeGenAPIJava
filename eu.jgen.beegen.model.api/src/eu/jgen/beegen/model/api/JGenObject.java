@@ -84,8 +84,13 @@ public class JGenObject {
 		logger.setLevel(this.genModel.genContainer.getLogger().getLevel());
 	}
 	
-	/*
-	 * Find character property of the spcified type for this object.
+	/**
+	 * The method finds a character property of the specified type for this object. 
+	 * It returns if the object does not have the property of the specified type or 
+	 * value existing property is not character type.
+	 * 
+	 * @param prpMetaType type of property
+	 * @return value of the property
 	 */
 	public char findCharacterProperty(PrpMetaType prpMetaType) {
 		PreparedStatement statement;
@@ -113,8 +118,14 @@ public class JGenObject {
 		return character;
 	}
 
-	/*
-	 * Find number property of the spcified type for this object.
+
+	/**
+	 * The method finds a number property of the specified type for this object. 
+	 * It returns in the object's case that does not have of the specified type or 
+	 * value existing property is not character type.
+	 * 
+	 * @param prpMetaType type of property
+	 * @return value of the property
 	 */
 	public int findNumberProperty(PrpMetaType prpMetaType) {
 		PreparedStatement statement;
@@ -139,8 +150,13 @@ public class JGenObject {
 		return number;
 	}
 
-	/*
-	 * Find text property of the spcified type for this object.
+	/**
+	 * The method finds a text property of the specified type for this object. It returns an 
+	 * empty string if the object, for some reason, does not have the property of the 
+	 * specified type or value existing property is not character type.
+	 * 
+	 * @param prpMetaType type of property
+	 * @return value of the property
 	 */
 	public String findTextProperty(PrpMetaType prpMetaType) {
 		PreparedStatement statement;
@@ -165,8 +181,14 @@ public class JGenObject {
 		return text;
 	}
 
-	/*
-	 * Find assoctaions of the spcified type from this object.
+
+	/**
+	 * Finds and returns the collection of associated objects with itself. You specify as a parameter 
+	 * what type of associations to return. Returns empty collection if no matching associations 
+	 * are found.
+	 * 
+	 * @param ascMetaType type of association
+	 * @return list of associated objects
 	 */
 	public List<JGenObject> findAssociationMany(AscMetaType ascMetaType) {
 		List<JGenObject> list = new ArrayList<JGenObject>();
@@ -190,8 +212,12 @@ public class JGenObject {
 		return list;
 	}
 
-	/*
-	 * Find association of the specified type associated with this object.
+	/**
+	 * Finds and returns a single associated object with itself. You specify as a parameter 
+	 * what type of association to return. Returns null if such association does not exist.
+	 * 
+	 * @param ascMetaType type of association
+	 * @return single associated object or null
 	 */
 	public JGenObject findAssociationOne(AscMetaType ascMetaType) {
 		JGenObject genObject = null;
