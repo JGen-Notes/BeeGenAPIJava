@@ -1,3 +1,4 @@
 # BeeGenAPIJava
-The Bee Gen Model API is very simple and straightforward. It has very few classes to access and examine the contents of the model. You will notice that the API does not include any methods allowing change imported model. You still need to download and use a free copy of the CA Gen software to create and develop your application. Such a model can then be extracted from the CA Gen Local Model and imported to the Bee Gen Model Framework using the dedicated utilities. You can learn more about an entire process here.
- Here is a brief summary of the API. You can download the API documentation from here.
+Bee Gen API for Java is part of a more significant project Bee Gen Model Framework. The framework allows extracting design metadata from the CA Gen Local model and import to the framework. The framework has its method of storing metadata in a dedicated sort of container and preset it as a model. Bee Gen API provides a means to access such metadata, constituting what we consider a model imported from the CA Gen.
+
+A container uses SQLite as a means of storing and retrieving information. Therefore you need to have SQLite installed in your environment. Since SQLite and Java are portable and can run on many supporting platforms, the framework and applications developed using the framework can be installed and run on all supporting platforms.
