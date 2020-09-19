@@ -1,5 +1,6 @@
 # BeeGenAPIJava
-*Overview*
+Overview
+========
 
 Bee Gen API for Java is part of a more significant project Bee Gen Model Framework. The framework allows extracting design metadata from the CA Gen Local model and import to the framework. The framework has its method of storing metadata in a dedicated sort of container and preset it as a model. Bee Gen API provides a means to access such metadata, constituting what we consider a model imported from the CA Gen.
 
