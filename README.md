@@ -1,5 +1,5 @@
 ![](jgernnotes200x45.png)
-# ![](bee45x45.png)BeeGenAPIJava
+# ![](bee30x30.png)BeeGenAPIJava
 Overview
 ========
 
