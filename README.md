@@ -1,4 +1,4 @@
-#![](bee30x30.png)Bee Gen API for Java
+![](bee30x30.png)#Bee Gen API for Java
 
 [![N|Solid](jgernnotes200x45.png)](http://www.jgen.eu/?p=900&preview=true)
 
@@ -9,4 +9,4 @@ Bee Gen API for Java is part of a more significant project Bee Gen Model Framewo
 
 A container uses SQLite as a means of storing and retrieving information. Therefore you need to have SQLite installed in your environment. Since SQLite and Java are portable and can run on many supporting platforms, the framework and applications developed using the framework can be installed and run on all supporting platforms.
 
-[API Documentation]: <eu.jgen.beegen.model.api/doc/index.html>
+[API Documentation] <eu.jgen.beegen.model.api/doc/index.html>
