@@ -1,4 +1,4 @@
-![](bee30x30.png)# Bee Gen API for Java
+# Bee Gen API for Java
 
 [![N|Solid](jgernnotes200x45.png)](http://www.jgen.eu/?p=900&preview=true)
 
