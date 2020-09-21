@@ -1,4 +1,5 @@
-![](jgernnotes200x45.png) (http://www.jgen.eu/?p=900&preview=true)
+[![N|Solid](jgernnotes200x45.png)](http://www.jgen.eu/?p=900&preview=true
+
 # ![](bee30x30.png)Bee Gen API for Java
 Overview
 ========
