@@ -1,4 +1,4 @@
-![Hello](jgernnotes200x45.png)[blog](http://www.jgen.eu/?p=900&preview=true)
+![(http://www.jgen.eu/?p=900&preview=true)](jgernnotes200x45.png)
 # ![](bee30x30.png)Bee Gen API for Java
 Overview
 ========
