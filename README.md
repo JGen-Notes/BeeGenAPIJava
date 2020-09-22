@@ -13,6 +13,9 @@ A container uses SQLite as a means of storing and retrieving information. Theref
 
 More about project you can find [here](http://www.jgen.eu/?p=900&preview=true).
 
+> The Bee Gen Model Framework is still under
+> development and subject to changes.
+
 Versions of used Software
 =========================
 
