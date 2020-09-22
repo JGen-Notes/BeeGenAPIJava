@@ -15,9 +15,13 @@ Version of Software
 ===================
 
 [SQLite Release 3.33.0 On 2020-08-14](https://sqlite.org/index.html)
+
 [sqlite-jdbc-3.32.3.2](https://github.com/xerial/sqlite-jdbc/releases)
+
 Java SE 8 [1.8.0_05]
+
 Eclipse Version: 2020-06 (4.16.0)
+
 
 
 
