@@ -11,8 +11,8 @@ A container uses SQLite as a means of storing and retrieving information. Theref
 
 [Bee Gen API for Java doumentation can be downloded here.](https://github.com/JGen-Notes/BeeGenAPIJava/blob/master/eu.jgen.beegen.model.api/BeeGenAPIDoc.zip)
 
-Version of Software
-===================
+Versions of used Software
+=========================
 
 - [SQLite Release 3.33.0 On 2020-08-14](https://sqlite.org/index.html)
 
@@ -22,6 +22,36 @@ Version of Software
 
 - [Eclipse Version: 2020-06 (4.16.0)](https://www.eclipse.org/downloads/)
 
+Example of use
+==============
 
+Here is an example of the Java program using the API.
+
+```sh
+package eu.jgen.beegen.model.api.example;
+
+import eu.jgen.beegen.model.api.JGenContainer;
+import eu.jgen.beegen.model.api.JGenModel;
+import eu.jgen.beegen.model.api.JGenObject;
+import eu.jgen.beegen.model.meta.ObjMetaType;
+import eu.jgen.beegen.model.meta.PrpMetaType;
+
+public class ListAllActionBlockNames {
+
+	public static void main(String[] args) {
+		JGenContainer genContainer = new JGenContainer();
+		JGenModel genModel = genContainer.connect("/Users/Xxxxx/beegen01.ief/bee/BEEGEN01.db");
+		System.out.println("List of action blocks in the model: " + genModel.getName() + ", Using schema level: "
+				+ genModel.getSchema() + "\n");
+		for (JGenObject genObject : genModel.findTypeObjects(ObjMetaType.ACBLKBSD)) {
+			System.out.println("\tAction block name: " + genObject.findTextProperty(PrpMetaType.NAME) + ", having id: "
+					+ genObject.objId);
+		}
+		genContainer.disconnect();
+		System.out.println("\nCompleted.");
+	}
+
+}
+```
 
 
