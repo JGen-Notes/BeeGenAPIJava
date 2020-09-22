@@ -11,7 +11,7 @@ A container uses SQLite as a means of storing and retrieving information. Theref
 
 [Bee Gen API for Java doumentation can be downloded here.](https://github.com/JGen-Notes/BeeGenAPIJava/blob/master/eu.jgen.beegen.model.api/BeeGenAPIDoc.zip)
 
-More about project you can find [here](http://www.jgen.eu/?p=900&preview=true)
+More about project you can find [here](http://www.jgen.eu/?p=900&preview=true).
 
 Versions of used Software
 =========================
