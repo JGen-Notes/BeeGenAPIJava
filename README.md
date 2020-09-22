@@ -54,4 +54,16 @@ public class ListAllActionBlockNames {
 }
 ```
 
+It produces the following output:
 
+```sh
+List of action blocks in the model: BEEGEN01, Using schema level: 9.2.A6
+
+	Action block name: PERSON_CREATE, having id: 22020096
+	Action block name: PERSON_DELETE, having id: 22020097
+	Action block name: PERSON_UPDATE, having id: 22020098
+	Action block name: PERSON_READ, having id: 22020099
+	Action block name: PERSON_LIST, having id: 22020100
+
+Completed.
+```
